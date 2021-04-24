@@ -15,7 +15,8 @@
 }
 
 html,
-body {
+body,
+#root {
 	height: 100%;
 	margin: 0;
 	padding: 0;
@@ -23,4 +24,8 @@ body {
 body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+}
+
+.login-body *::-webkit-scrollbar {
+	display: none;
 }

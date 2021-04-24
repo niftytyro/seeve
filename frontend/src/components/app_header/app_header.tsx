@@ -2,7 +2,7 @@ import React from "react";
 
 function AppHeader() {
 	return (
-		<div className="flex items-center w-full mb-8">
+		<div className="flex items-center mb-8">
 			<div className="w-16 h-6 mr-4">
 				<img
 					className="object-contain w-full h-full"
