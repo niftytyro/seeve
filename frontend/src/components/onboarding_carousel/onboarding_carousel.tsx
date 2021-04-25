@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import CarouselImage from "./carousel_image";
 import CarouselSlide from "./carousel_slide";
 import CarouselSubtitle from "./carousel_subtitle";
@@ -14,20 +14,22 @@ function OnboardingCarousel() {
 		if (carouselIndex > 0) setCarouselIndex(carouselIndex - 1);
 	};
 
+	const updateScrollPosition = useCallback(
+		(useSmooth: Boolean) => {
+			carouselRef.current?.scrollTo({
+				left: (carouselIndex * window.innerWidth) / 2,
+				behavior: useSmooth ? "smooth" : undefined,
+			});
+		},
+		[carouselIndex]
+	);
+
 	useEffect(() => {
-		const updateScrollPosition = (useSmooth: Boolean) => {
-			return () => {
-				carouselRef.current?.scrollTo({
-					left: (carouselIndex * window.innerWidth) / 2,
-					behavior: useSmooth ? "smooth" : undefined,
-				});
-			};
-		};
-		updateScrollPosition(true)();
-		window.addEventListener("resize", updateScrollPosition(false));
+		updateScrollPosition(true);
+		window.addEventListener("resize", () => updateScrollPosition(false));
 		return () =>
-			window.removeEventListener("resize", updateScrollPosition(false));
-	}, [carouselIndex]);
+			window.removeEventListener("resize", () => updateScrollPosition(false));
+	}, [updateScrollPosition]);
 
 	return (
 		<div className="relative w-1/2 h-2/3">
