@@ -15,11 +15,18 @@ function OnboardingCarousel() {
 	};
 
 	useEffect(() => {
-		carouselRef.current?.scrollTo({
-			left: (carouselIndex * window.innerWidth) / 2,
-			behavior: "smooth",
-		});
-		console.log(carouselIndex);
+		const updateScrollPosition = (useSmooth: Boolean) => {
+			return () => {
+				carouselRef.current?.scrollTo({
+					left: (carouselIndex * window.innerWidth) / 2,
+					behavior: useSmooth ? "smooth" : undefined,
+				});
+			};
+		};
+		updateScrollPosition(true)();
+		window.addEventListener("resize", updateScrollPosition(false));
+		return () =>
+			window.removeEventListener("resize", updateScrollPosition(false));
 	}, [carouselIndex]);
 
 	return (
