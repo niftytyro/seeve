@@ -4,27 +4,21 @@ import "./App.css";
 import Sidebar from "./components/sidebar/sidebar";
 import Login from "./pages/login";
 
-function App() {
-	const [jwt, setJwt] = useState<string | null>();
-	useEffect(() => {
-		const token = localStorage.getItem("jwt");
-		setJwt(token);
-	}, []);
+const App: React.FC = () => {
+  if (document.cookie.slice(0, 4) !== "jwt=") return <Login />;
 
-	if (!jwt) return <Login />;
-
-	return (
-		<Router>
-			<Switch>
-				<Route path="/">
-					<div className="flex flex-row p-4 h-full divide-x divide-light-blue-400">
-						<Sidebar />
-						<div></div>
-					</div>
-				</Route>
-			</Switch>
-		</Router>
-	);
-}
+  return (
+    <Router>
+      <Switch>
+        <Route exact path="/">
+          <div className="flex flex-row p-4 h-full divide-x divide-light-blue-400">
+            <Sidebar />
+            <div></div>
+          </div>
+        </Route>
+      </Switch>
+    </Router>
+  );
+};
 
 export default App;

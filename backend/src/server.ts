@@ -1,5 +1,7 @@
-import express from "express";
 import "reflect-metadata";
+import express from "express";
+import cors from "cors";
+import cookieParser from "cookie-parser";
 import { createConnection } from "typeorm";
 import { PORT } from "./constants";
 import googleRouter from "./routes/google";
@@ -10,6 +12,8 @@ let main = async () => {
 
   await createConnection(typeormConfig);
 
+  app.use(cors());
+  app.use(cookieParser());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
 

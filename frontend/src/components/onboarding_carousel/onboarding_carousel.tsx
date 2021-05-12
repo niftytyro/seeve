@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { API_URL } from "../../constants";
 import CarouselImage from "./carousel_image";
 import CarouselSlide from "./carousel_slide";
 import CarouselSubtitle from "./carousel_subtitle";
@@ -12,6 +13,14 @@ function OnboardingCarousel() {
   };
   const previous = () => {
     if (carouselIndex > 0) setCarouselIndex(carouselIndex - 1);
+  };
+
+  const login = async () => {
+    const res = await fetch(`${API_URL}/auth/google/login`, {
+      method: "GET",
+    });
+
+    window.location.assign(await res.text());
   };
 
   useEffect(() => {
@@ -59,7 +68,10 @@ function OnboardingCarousel() {
         <CarouselSlide>
           <div className="flex flex-col h-2/3 justify-evenly items-center">
             <CarouselSubtitle>Become a member.</CarouselSubtitle>
-            <button className="py-2 px-16 font-medium border rounded-full border-yellow-300 active:bg-yellow-300 focus:outline-none active:text-gray-700">
+            <button
+              className="py-2 px-16 font-medium border rounded-full border-yellow-300 active:bg-yellow-300 focus:outline-none active:text-gray-700"
+              onClick={login}
+            >
               Login with Google
             </button>
           </div>

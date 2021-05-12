@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 
-dotenv.config({ path: "../dev.env" });
+dotenv.config({ path: __dirname + "/../dev.env" });
 
 export const __prod__ = process.env.NODE_ENV === "production";
 
