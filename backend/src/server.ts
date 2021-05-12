@@ -6,18 +6,18 @@ import googleRouter from "./routes/google";
 import { typeormConfig } from "./typeorm.config";
 
 let main = async () => {
-	const app = express();
+  const app = express();
 
-	await createConnection(typeormConfig);
+  await createConnection(typeormConfig);
 
-	app.use(express.urlencoded({ extended: false }));
-	app.use(express.json());
+  app.use(express.urlencoded({ extended: false }));
+  app.use(express.json());
 
-	app.use("/auth", googleRouter);
+  app.use("/auth", googleRouter);
 
-	app.listen(PORT, () => {
-		console.log(`Listening on PORT: ${PORT}`);
-	});
+  app.listen(PORT, () => {
+    console.log(`Listening on PORT: ${PORT}`);
+  });
 };
 
 main().catch(console.log);
