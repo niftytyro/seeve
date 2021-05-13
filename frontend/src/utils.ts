@@ -10,7 +10,7 @@ export const SectionStateColors = {
   _inactive: "A5A8B1",
 };
 
-export const SidebarSectionsList = [
+export const sidebarSectionsList = [
   "Dashboard",
   "Tasks",
   "Goals",
