@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./App.css";
 import Sidebar from "./components/sidebar/sidebar";
 import Login from "./pages/login";
+import Tasks from "./pages/tasks";
+import { sidebarSectionsList } from "./utils";
 
 const App: React.FC = () => {
   const [selected, setSelected] = useState<number>(0);
@@ -10,7 +12,13 @@ const App: React.FC = () => {
   return (
     <div className="flex flex-row p-4 h-full divide-x divide-light-blue-400">
       <Sidebar selected={selected} setSelected={setSelected} />
-      <div></div>
+      <div className="w-full">
+        {selected === sidebarSectionsList.indexOf("Tasks") ? (
+          <Tasks />
+        ) : (
+          <div></div>
+        )}
+      </div>
     </div>
   );
 };
