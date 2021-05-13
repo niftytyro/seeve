@@ -18,3 +18,5 @@ export const sidebarSectionsList = [
   "Schedule",
   "Reminders",
 ];
+
+export const API_URL = "http://localhost:8000";

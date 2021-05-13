@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { API_URL } from "../../constants";
 import CarouselImage from "./carousel_image";
 import CarouselSlide from "./carousel_slide";
 import CarouselSubtitle from "./carousel_subtitle";
 
-function OnboardingCarousel() {
+const OnboardingCarousel: React.FC = () => {
   const [carouselIndex, setCarouselIndex] = useState(0);
   const carouselRef = useRef<HTMLDivElement>(null);
 
@@ -79,6 +79,6 @@ function OnboardingCarousel() {
       </div>
     </div>
   );
-}
+};
 
 export default OnboardingCarousel;

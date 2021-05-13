@@ -1,6 +1,10 @@
 import React from "react";
 
-function CarouselImage({ imageTitle }: { imageTitle: String }) {
+interface CarouselImageProps {
+  imageTitle: string;
+}
+
+const CarouselImage: React.FC<CarouselImageProps> = ({ imageTitle }) => {
   return (
     <img
       className="w-full h-4/5 object-contain"
@@ -8,6 +12,6 @@ function CarouselImage({ imageTitle }: { imageTitle: String }) {
       alt="meditation"
     />
   );
-}
+};
 
 export default CarouselImage;

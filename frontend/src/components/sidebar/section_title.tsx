@@ -1,20 +1,23 @@
+import React from "react";
 import { SectionState } from "../../utils";
 
-function SectionTitle({
-  index,
-  onClick,
-  onHoverIn,
-  onHoverOut,
-  state,
-  title,
-}: {
+interface SectionTitleProps {
   index: number;
   onClick: Function;
   onHoverIn: Function;
   onHoverOut: Function;
   state: SectionState;
   title: string;
-}) {
+}
+
+const SectionTitle: React.FC<SectionTitleProps> = ({
+  index,
+  onClick,
+  onHoverIn,
+  onHoverOut,
+  state,
+  title,
+}) => {
   return (
     <div
       onMouseEnter={() => {
@@ -37,6 +40,6 @@ function SectionTitle({
       <div className={`mr-6 text-${state}`}>{title}</div>
     </div>
   );
-}
+};
 
 export default SectionTitle;

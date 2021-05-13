@@ -1,10 +1,14 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { SectionState, sidebarSectionsList } from "../../utils";
 import AppHeader from "../app_header/app_header";
 import SectionTitle from "./section_title";
 
-function Sidebar() {
-  const [selected, setSelected] = useState(0);
+interface SidebarProps {
+  selected: number;
+  setSelected: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Sidebar: React.FC<SidebarProps> = ({ selected, setSelected }) => {
   const [hover, setHover] = useState(-1);
 
   return (
@@ -33,6 +37,6 @@ function Sidebar() {
       })}
     </div>
   );
-}
+};
 
 export default Sidebar;
