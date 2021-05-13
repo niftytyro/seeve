@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { SectionState, sidebarSectionsList } from "../../utils";
-import AppHeader from "../app_header/app_header";
+import AppHeader from "../app_header";
 import SectionTitle from "./section_title";
 
 interface SidebarProps {

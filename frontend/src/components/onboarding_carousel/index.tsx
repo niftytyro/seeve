@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { API_URL } from "../../constants";
+import { API_URL } from "../../utils";
 import CarouselImage from "./carousel_image";
 import CarouselSlide from "./carousel_slide";
 import CarouselSubtitle from "./carousel_subtitle";

@@ -1,6 +1,6 @@
 import React from "react";
-import AppHeader from "../components/app_header/app_header";
-import OnboardingCarousel from "../components/onboarding_carousel/onboarding_carousel";
+import AppHeader from "../components/app_header";
+import OnboardingCarousel from "../components/onboarding_carousel";
 
 const Login: React.FC = () => {
   return (
