@@ -6,6 +6,7 @@ import { createConnection } from "typeorm";
 import { PORT } from "./constants";
 import googleRouter from "./routes/google";
 import typeormConfig from "./typeorm.config";
+import tasksRouter from "./routes/tasks";
 
 let main = async () => {
   const app = express();
@@ -25,6 +26,7 @@ let main = async () => {
   app.use(express.json());
 
   app.use("/auth", googleRouter);
+  app.use("/tasks", tasksRouter);
 
   app.listen(PORT, () => {
     console.log(`Listening on PORT: ${PORT}`);
