@@ -22,7 +22,7 @@ export const sidebarSectionsList = [
 export const API_URL = "http://localhost:8000";
 
 export interface Task {
-  idx: number;
+  id: number;
   done: boolean;
-  task: string;
+  title: string;
 }

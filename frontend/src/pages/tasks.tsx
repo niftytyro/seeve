@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
+import { useToasts } from "react-toast-notifications";
 import TaskTile from "../components/taskTile";
 import { API_URL, Task } from "../utils";
 
 const Tasks: React.FC = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(-1);
   const [tasks, setTasks] = useState<Task[] | null>(null);
+  const { addToast } = useToasts();
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -22,27 +24,67 @@ const Tasks: React.FC = () => {
       </div>
     );
 
-  const addTask: () => void = () => {
-    if (inputRef.current && inputRef.current.value.trim() !== "") {
-      setTasks([
-        ...tasks,
-        { done: false, idx: tasks.length, task: inputRef.current.value },
-      ]);
-      inputRef.current.value = "";
+  const addTask: () => void = async () => {
+    if (inputRef.current) {
+      const res = await fetch(`${API_URL}/tasks/create`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: inputRef.current.value,
+        }),
+      });
+      if (res.status === 201) {
+        setTasks([
+          ...tasks,
+          { done: false, id: tasks.length, title: inputRef.current.value },
+        ]);
+        inputRef.current.value = "";
+      } else {
+        addToast(await res.text(), { appearance: "error", autoDismiss: true });
+      }
     }
     inputRef.current?.focus();
   };
 
-  const deleteTask: (idx: number) => void = (idx) => {
-    const newTasks = tasks.filter((task) => task.idx !== idx);
-    setTasks(newTasks);
-    setHoverIdx(-1);
+  const deleteTask: (idx: number) => void = async (idx) => {
+    const res = await fetch(`${API_URL}/tasks/delete/${idx}`, {
+      method: "POST",
+      credentials: "include",
+    });
+    if (res.status === 200) {
+      const newTasks = tasks.filter((task) => task.id !== idx);
+      setTasks(newTasks);
+      setHoverIdx(-1);
+    } else {
+      addToast(await res.text(), { appearance: "error", autoDismiss: true });
+    }
   };
 
-  const toggleTaskStatus: (idx: number) => void = (idx) => {
-    const newTasks: Task[] = JSON.parse(JSON.stringify(tasks));
-    newTasks[idx].done = !newTasks[idx].done;
-    setTasks(newTasks);
+  const toggleTaskStatus: (idx: number) => void = async (idx) => {
+    let task = tasks.filter((task) => task.id === idx)[0];
+    const res = await fetch(`${API_URL}/tasks/edit/${idx}`, {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        title: task.title,
+        done: !task.done,
+      }),
+    });
+    if (res.status === 200) {
+      task.done = !task.done;
+      console.log(tasks);
+
+      const newTasks: Task[] = JSON.parse(JSON.stringify(tasks));
+      console.log(newTasks);
+      setTasks(newTasks);
+    } else
+      addToast(await res.text(), { appearance: "error", autoDismiss: true });
     inputRef.current?.focus();
   };
 
@@ -61,8 +103,8 @@ const Tasks: React.FC = () => {
               key={idx}
               hoverIdx={hoverIdx}
               done={task.done}
-              idx={task.idx}
-              title={task.task}
+              idx={task.id}
+              title={task.title}
               deleteTask={deleteTask}
               setHoverIdx={setHoverIdx}
               toggleTaskStatus={toggleTaskStatus}
@@ -79,8 +121,8 @@ const Tasks: React.FC = () => {
               key={idx}
               hoverIdx={hoverIdx}
               done={task.done}
-              idx={task.idx}
-              title={task.task}
+              idx={task.id}
+              title={task.title}
               deleteTask={deleteTask}
               setHoverIdx={setHoverIdx}
               toggleTaskStatus={toggleTaskStatus}

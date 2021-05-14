@@ -47,7 +47,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
       {idx === hoverIdx && (
         <div
           onClick={() => deleteTask(idx)}
-          className="transition-all duration-300"
+          className="h-full px-5 transition-all duration-300"
         >
           &#10005;
         </div>

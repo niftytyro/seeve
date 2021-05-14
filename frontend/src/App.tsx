@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { ToastProvider } from "react-toast-notifications";
 import "./App.css";
 import Sidebar from "./components/sidebar/sidebar";
 import Login from "./pages/login";
@@ -27,16 +28,18 @@ const App: React.FC = () => {
   if (!authenticated) return <Login />;
 
   return (
-    <div className="flex flex-row p-4 h-full divide-x divide-light-blue-400">
-      <Sidebar selected={selected} setSelected={setSelected} />
-      <div className="w-full">
-        {selected === sidebarSectionsList.indexOf("Tasks") ? (
-          <Tasks />
-        ) : (
-          <div></div>
-        )}
+    <ToastProvider>
+      <div className="flex flex-row p-4 h-full divide-x divide-light-blue-400">
+        <Sidebar selected={selected} setSelected={setSelected} />
+        <div className="w-full">
+          {selected === sidebarSectionsList.indexOf("Tasks") ? (
+            <Tasks />
+          ) : (
+            <div></div>
+          )}
+        </div>
       </div>
-    </div>
+    </ToastProvider>
   );
 };
 
