@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 interface TaskTileProps {
   done: boolean;
@@ -7,7 +7,7 @@ interface TaskTileProps {
   title: string;
   deleteTask: (idx: number) => void;
   setHoverIdx: React.Dispatch<React.SetStateAction<number>>;
-  toggleTaskStatus: (idx: number) => void;
+  updateTask: (idx: number, done: boolean, title: string) => void;
 }
 
 const TaskTile: React.FC<TaskTileProps> = ({
@@ -17,8 +17,12 @@ const TaskTile: React.FC<TaskTileProps> = ({
   title,
   deleteTask,
   setHoverIdx,
-  toggleTaskStatus,
+  updateTask,
 }) => {
+  const [titleValue, setTitleValue] = useState<string>("");
+  useEffect(() => {
+    setTitleValue(title);
+  }, [title]);
   return (
     <div
       onMouseOver={() => setHoverIdx(idx)}
@@ -29,10 +33,10 @@ const TaskTile: React.FC<TaskTileProps> = ({
       }
     >
       <div
-        onClick={() => toggleTaskStatus(idx)}
         className={"flex items-center w-full " + (done ? "line-through " : "")}
       >
         <div
+          onClick={() => updateTask(idx, !done, title)}
           className={
             "flex justify-center items-center w-6 h-6 mr-4 border-gray-400 rounded-full cursor-pointer transition-all duration-300 " +
             (done ? "bg-yellow-400" : "border")
@@ -42,7 +46,19 @@ const TaskTile: React.FC<TaskTileProps> = ({
             <img className="w-3 h-3" src="/icons/check-mark.svg" alt="" />
           )}
         </div>
-        {title}
+        <input
+          className={"bg-transparent focus:outline-none"}
+          onChange={(e) => setTitleValue(e.currentTarget.value)}
+          value={titleValue}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              e.currentTarget.blur();
+            }
+          }}
+          onBlur={() => {
+            updateTask(idx, done, titleValue);
+          }}
+        />
       </div>
       {idx === hoverIdx && (
         <div

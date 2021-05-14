@@ -63,30 +63,29 @@ const Tasks: React.FC = () => {
     }
   };
 
-  const toggleTaskStatus: (idx: number) => void = async (idx) => {
-    let task = tasks.filter((task) => task.id === idx)[0];
-    const res = await fetch(`${API_URL}/tasks/edit/${idx}`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title: task.title,
-        done: !task.done,
-      }),
-    });
-    if (res.status === 200) {
-      task.done = !task.done;
-      console.log(tasks);
-
-      const newTasks: Task[] = JSON.parse(JSON.stringify(tasks));
-      console.log(newTasks);
-      setTasks(newTasks);
-    } else
-      addToast(await res.text(), { appearance: "error", autoDismiss: true });
-    inputRef.current?.focus();
-  };
+  const updateTask: (idx: number, done: boolean, title: string) => void =
+    async (idx, done, title) => {
+      let task = tasks.filter((task) => task.id === idx)[0];
+      const res = await fetch(`${API_URL}/tasks/edit/${idx}`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: title,
+          done: done,
+        }),
+      });
+      if (res.status === 200) {
+        task.done = done;
+        task.title = title;
+        const newTasks: Task[] = JSON.parse(JSON.stringify(tasks));
+        setTasks(newTasks);
+      } else
+        addToast(await res.text(), { appearance: "error", autoDismiss: true });
+      inputRef.current?.focus();
+    };
 
   return (
     <div className="flex flex-col justify-between w-1/2 h-full pb-12 m-auto">
@@ -107,7 +106,7 @@ const Tasks: React.FC = () => {
               title={task.title}
               deleteTask={deleteTask}
               setHoverIdx={setHoverIdx}
-              toggleTaskStatus={toggleTaskStatus}
+              updateTask={updateTask}
             />
           ))}
         {tasks.filter((task) => task.done).length &&
@@ -125,7 +124,7 @@ const Tasks: React.FC = () => {
               title={task.title}
               deleteTask={deleteTask}
               setHoverIdx={setHoverIdx}
-              toggleTaskStatus={toggleTaskStatus}
+              updateTask={updateTask}
             />
           ))}
       </div>
