@@ -5,14 +5,21 @@ import cookieParser from "cookie-parser";
 import { createConnection } from "typeorm";
 import { PORT } from "./constants";
 import googleRouter from "./routes/google";
-import { typeormConfig } from "./typeorm.config";
+import typeormConfig from "./typeorm.config";
 
 let main = async () => {
   const app = express();
 
-  await createConnection(typeormConfig);
+  const connection = await createConnection(typeormConfig);
 
-  app.use(cors());
+  connection.runMigrations();
+
+  app.use(
+    cors({
+      origin: "http://localhost:3000",
+      credentials: true,
+    })
+  );
   app.use(cookieParser());
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());

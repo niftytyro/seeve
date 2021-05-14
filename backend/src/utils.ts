@@ -1,12 +1,12 @@
 // JWT Utilities
 export interface UserPayload {
-	id: number;
+  id: number;
 }
 
 declare global {
-	namespace Express {
-		interface Request {
-			user?: UserPayload;
-		}
-	}
+  namespace Express {
+    interface Request {
+      user?: UserPayload;
+    }
+  }
 }

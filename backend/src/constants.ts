@@ -1,4 +1,5 @@
 import dotenv from "dotenv";
+import { CookieOptions } from "express";
 
 dotenv.config({ path: __dirname + "/../dev.env" });
 
@@ -13,3 +14,9 @@ export const __google_client_id__ = process.env.GOOGLE_CLIENT_ID;
 export const __google_client_secret__ = process.env.GOOGLE_CLIENT_SECRET;
 
 export const __google_redirect_uri__ = process.env.GOOGLE_REDIRECT_URI;
+
+export const __cookie_options__: CookieOptions = {
+  httpOnly: true,
+  sameSite: "lax",
+  secure: __prod__,
+};
