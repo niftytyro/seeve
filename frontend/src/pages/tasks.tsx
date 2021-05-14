@@ -1,11 +1,26 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import TaskTile from "../components/taskTile";
-import { Task } from "../utils";
+import { API_URL, Task } from "../utils";
 
 const Tasks: React.FC = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(-1);
-  const [tasks, setTasks] = useState<Task[]>([]);
+  const [tasks, setTasks] = useState<Task[] | null>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await fetch(`${API_URL}/tasks`, { credentials: "include" });
+      const tasksList = await res.json();
+      setTasks(tasksList);
+    })();
+  }, []);
+
+  if (tasks === null)
+    return (
+      <div className="flex justify-center items-center h-full">
+        <img src="/icons/spinner.svg" alt="" />
+      </div>
+    );
 
   const addTask: () => void = () => {
     if (inputRef.current && inputRef.current.value.trim() !== "") {
