@@ -12,7 +12,7 @@ const Sidebar: React.FC<SidebarProps> = ({ selected, setSelected }) => {
   const [hover, setHover] = useState(-1);
 
   return (
-    <div className="flex flex-col w-min h-full p-4 font-sans">
+    <div className="flex flex-col w-1/5 h-full p-4 font-sans">
       <AppHeader />
       {sidebarSectionsList.map((sectionTitle, idx) => {
         return (

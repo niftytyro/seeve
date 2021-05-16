@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ToastProvider } from "react-toast-notifications";
 import "./App.css";
-import Sidebar from "./components/sidebar/sidebar";
+import Sidebar from "./components/sidebar";
 import Login from "./pages/login";
 import Tasks from "./pages/tasks";
 import { API_URL, sidebarSectionsList } from "./utils";

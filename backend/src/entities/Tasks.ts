@@ -19,6 +19,12 @@ export class Tasks {
   @Column({ default: false, nullable: false })
   done: boolean;
 
+  @Column({ nullable: true })
+  date: string;
+
+  @Column({ nullable: true })
+  time: string;
+
   @ManyToOne((_) => Users, (user) => user.tasks)
   user: Users;
 

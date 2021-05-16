@@ -5,27 +5,83 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
 
 * {
-	box-sizing: border-box;
-	-webkit-touch-callout: none;
-	-webkit-user-select: none;
-	-khtml-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
+  box-sizing: border-box;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: gray;
+  border-radius: 2000px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: black;
 }
 
 html,
 body,
 #root {
-	height: 100%;
-	margin: 0;
-	padding: 0;
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
 body {
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .login-body *::-webkit-scrollbar {
-	display: none;
+  display: none;
+}
+
+.MuiInput-input.MuiInputBase-input {
+  display: none;
+}
+.MuiInputBase-root.MuiInput-root.MuiInput-underline.MuiInputBase-formControl.MuiInput-formControl {
+  display: none;
+}
+
+.MuiPickersModal-dialogActions {
+  justify-content: flex-end !important;
+}
+
+.MuiPickersToolbar-toolbar {
+  background-color: #000 !important;
+}
+.MuiPickersDay-current {
+  color: #bbaa00 !important;
+}
+.MuiButton-textPrimary {
+  color: #222 !important;
+}
+.MuiPickersDay-isSelected {
+  background-color: #000 !important;
+}
+.MuiPickersClock-pin {
+  background-color: #000 !important;
+}
+.MuiPickersClockPointer-pointer {
+  background-color: #000 !important;
+}
+.MuiPickersClockPointer-noPoint {
+  background-color: #000 !important;
+}
+.MuiPickersClockPointer-thumb {
+  border: 14px solid #000 !important;
+}
+.MuiPickersYear-root:focus {
+  color: #555 !important;
+}
+button:focus {
+  outline: none !important;
 }

@@ -17,6 +17,8 @@ tasksRouter.get("/", [verifyJWT], async (req: Request, res: Response) => {
         id: task.id,
         done: task.done,
         title: task.title,
+        date: task.date,
+        time: task.time,
       }))
     );
   }
@@ -28,6 +30,8 @@ tasksRouter.post(
   async (req: Request, res: Response) => {
     if (req.user) {
       const taskTitle: string | undefined = req.body.title;
+      const date: string | undefined = req.body.date;
+      const time: string | undefined = req.body.time;
       if (taskTitle)
         if (taskTitle.trim().length) {
           const tasksRepository = await getRepository(Tasks);
@@ -37,8 +41,14 @@ tasksRouter.post(
             const task = new Tasks();
             task.title = taskTitle;
             task.user = user;
-            await tasksRepository.save(task);
-            res.status(201).send("Success");
+            try {
+              if (date) task.date = new Date(date).toUTCString();
+              if (time) task.time = new Date(time).toUTCString();
+              await tasksRepository.save(task);
+              res.status(201).json({ id: task.id });
+            } catch (e) {
+              res.status(400).send("Invalid date/time.");
+            }
           }
         } else res.status(400).send("Task is empty!");
       else res.status(400).send("Task is empty!");
@@ -71,6 +81,8 @@ tasksRouter.post(
       if (req.user) {
         const taskTitle: string | undefined = req.body.title;
         const done: boolean | undefined = req.body.done;
+        const date: string | undefined = req.body.date;
+        const time: string | undefined = req.body.time;
         if (taskTitle && done !== undefined)
           if (taskTitle.trim().length) {
             const tasksRepository = await getRepository(Tasks);
@@ -78,8 +90,14 @@ tasksRouter.post(
             if (task) {
               task.done = done;
               task.title = taskTitle;
-              tasksRepository.save(task);
-              res.send("Success");
+              try {
+                if (date) task.date = new Date(date).toUTCString();
+                if (time) task.time = new Date(time).toUTCString();
+                tasksRepository.save(task);
+                res.send("Success");
+              } catch (e) {
+                res.status(400).send("Invalid date/time.");
+              }
             } else res.status(404).send("Could not find task.");
           } else res.status(400).send("Task is empty.");
         else res.status(400).send("Task details not provided.");
