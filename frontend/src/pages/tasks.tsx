@@ -144,8 +144,8 @@ const Tasks: React.FC = () => {
               .filter((task) => !task.done)
               .map((task, idx) => (
                 <TaskTile
-                  date={moment(task.date)}
-                  time={moment(task.time)}
+                  date={task.date ? moment(task.date) : null}
+                  time={task.time ? moment(task.time) : null}
                   key={idx}
                   hoverIdx={hoverIdx}
                   done={task.done}
