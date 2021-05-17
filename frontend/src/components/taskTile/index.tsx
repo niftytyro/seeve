@@ -85,6 +85,12 @@ const TaskTile: React.FC<TaskTileProps> = ({
             onClick={() => {
               setUpdateModalIsOpen(true);
             }}
+            className={
+              "w-4/5 transition-all " +
+              (hoverIdx === idx
+                ? ""
+                : "overflow-x-hidden whitespace-nowrap overflow-ellipsis")
+            }
           >
             {title}
           </div>
