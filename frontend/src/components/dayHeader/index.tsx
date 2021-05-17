@@ -9,7 +9,7 @@ interface DayHeaderProps {
 const DayHeader: React.FC<DayHeaderProps> = ({ openModal }) => {
   const [day] = useState<Date>(new Date());
   return (
-    <div className="flex justify-between items-start w-3/4 pt-2 pb-4 m-auto">
+    <div className="flex justify-between items-start w-full px-14 pt-2 pb-4 m-auto">
       <div>
         <div className="text-3xl font-semibold text-gray-800">Today</div>
         <div className="text-xl font-medium text-gray-500">

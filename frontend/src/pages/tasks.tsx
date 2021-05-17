@@ -109,53 +109,55 @@ const Tasks: React.FC = () => {
         setTime={setNewTaskTime}
         setTitle={setNewTaskTitle}
       />
-      <DayHeader openModal={() => setModalIsOpen(true)} />
       <div className="flex flex-col justify-between flex-1 w-full pb-8 overflow-hidden">
         <div className="w-full h-full overflow-y-scroll">
           <div className="w-3/4 m-auto">
-            {tasks.length === 0 && (
-              <div className="mt-32 text-center text-gray-600">
-                Your tasklist is empty.
-              </div>
-            )}
-            {tasks
-              .filter((task) => task.done)
-              .map((task, idx) => (
-                <TaskTile
-                  date={task.date ? moment(task.date) : null}
-                  time={task.time ? moment(task.time) : null}
-                  key={idx}
-                  hoverIdx={hoverIdx}
-                  done={task.done}
-                  idx={task.id}
-                  title={task.title}
-                  deleteTask={deleteTask}
-                  setHoverIdx={setHoverIdx}
-                  updateTask={updateTask}
-                />
-              ))}
-            {tasks.filter((task) => task.done).length &&
-            tasks.filter((task) => !task.done).length ? (
-              <div className="py-2">
-                <hr className="border" />
-              </div>
-            ) : null}
-            {tasks
-              .filter((task) => !task.done)
-              .map((task, idx) => (
-                <TaskTile
-                  date={task.date ? moment(task.date) : null}
-                  time={task.time ? moment(task.time) : null}
-                  key={idx}
-                  hoverIdx={hoverIdx}
-                  done={task.done}
-                  idx={task.id}
-                  title={task.title}
-                  deleteTask={deleteTask}
-                  setHoverIdx={setHoverIdx}
-                  updateTask={updateTask}
-                />
-              ))}
+            <DayHeader openModal={() => setModalIsOpen(true)} />
+            <div className="w-full">
+              {tasks.length === 0 && (
+                <div className="mt-32 text-center text-gray-600">
+                  Your tasklist is empty.
+                </div>
+              )}
+              {tasks
+                .filter((task) => task.done)
+                .map((task, idx) => (
+                  <TaskTile
+                    date={task.date ? moment(task.date) : null}
+                    time={task.time ? moment(task.time) : null}
+                    key={idx}
+                    hoverIdx={hoverIdx}
+                    done={task.done}
+                    idx={task.id}
+                    title={task.title}
+                    deleteTask={deleteTask}
+                    setHoverIdx={setHoverIdx}
+                    updateTask={updateTask}
+                  />
+                ))}
+              {tasks.filter((task) => task.done).length &&
+              tasks.filter((task) => !task.done).length ? (
+                <div className="py-2">
+                  <hr className="border" />
+                </div>
+              ) : null}
+              {tasks
+                .filter((task) => !task.done)
+                .map((task, idx) => (
+                  <TaskTile
+                    date={task.date ? moment(task.date) : null}
+                    time={task.time ? moment(task.time) : null}
+                    key={idx}
+                    hoverIdx={hoverIdx}
+                    done={task.done}
+                    idx={task.id}
+                    title={task.title}
+                    deleteTask={deleteTask}
+                    setHoverIdx={setHoverIdx}
+                    updateTask={updateTask}
+                  />
+                ))}
+            </div>
           </div>
         </div>
       </div>
