@@ -15,20 +15,6 @@ export const sidebarSectionsList = [
   "Reminders",
 ];
 
-export const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 export const DAYS = [
   "Sunday",
   "Monday",
@@ -38,6 +24,7 @@ export const DAYS = [
   "Friday",
   "Saturday",
 ];
+export const DAYS_SHORT = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 export const API_URL = "http://localhost:8000";
 

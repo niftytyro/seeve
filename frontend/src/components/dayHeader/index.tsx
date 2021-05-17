@@ -1,5 +1,6 @@
+import { months } from "moment";
 import React, { useState } from "react";
-import { DAYS, MONTHS } from "../../utils";
+import { DAYS } from "../../utils";
 
 interface DayHeaderProps {
   openModal: () => void;
@@ -12,7 +13,7 @@ const DayHeader: React.FC<DayHeaderProps> = ({ openModal }) => {
       <div>
         <div className="text-3xl font-semibold text-gray-800">Today</div>
         <div className="text-xl font-medium text-gray-500">
-          {DAYS[day.getDay()]}, {MONTHS[day.getMonth()]} {day.getDate()}
+          {DAYS[day.getDay()]}, {months(day.getMonth())} {day.getDate()}
         </div>
       </div>
       <button
