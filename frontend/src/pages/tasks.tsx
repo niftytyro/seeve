@@ -13,6 +13,7 @@ import {
 import moment from "moment";
 import Spinner from "../components/spinner";
 import DayHeader from "../components/dayHeader";
+import DateSelector from "../components/dateSelector";
 
 const Tasks: React.FC = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(-1);
@@ -110,8 +111,8 @@ const Tasks: React.FC = () => {
         setTitle={setNewTaskTitle}
       />
       <div className="flex flex-col justify-between flex-1 w-full pb-8 overflow-hidden">
-        <div className="w-full h-full overflow-y-scroll">
-          <div className="w-3/4 m-auto">
+        <div className="flex w-full h-full overflow-y-scroll">
+          <div className="w-2/3 pl-4">
             <DayHeader openModal={() => setModalIsOpen(true)} />
             <div className="w-full">
               {tasks.length === 0 && (
@@ -159,6 +160,7 @@ const Tasks: React.FC = () => {
                 ))}
             </div>
           </div>
+          <DateSelector />
         </div>
       </div>
     </div>
