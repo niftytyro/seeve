@@ -1,6 +1,9 @@
-import { Moment } from "moment";
+import { Moment, monthsShort } from "moment";
 import React, { useState } from "react";
 import TaskModal from "../modal/taskModal";
+import { DAYS_SHORT } from "../../utils";
+import Title from "./title";
+import StatusBullet from "./statusBullet";
 
 interface TaskTileProps {
   date: Moment | null;
@@ -60,53 +63,46 @@ const TaskTile: React.FC<TaskTileProps> = ({
         onMouseOver={() => setHoverIdx(idx)}
         onMouseLeave={() => setHoverIdx(-1)}
         className={
-          "flex justify-between items-center px-4 py-4 my-2 text-lg cursor-pointer rounded-lg transition duration-300 hover:bg-gray-100 " +
+          "px-4 py-4 my-2 text-lg cursor-pointer rounded-lg transition duration-300 hover:bg-gray-100 " +
           (done ? "text-gray-500" : "")
         }
       >
         <div
-          className={
-            "flex items-center w-full " + (done ? "line-through " : "")
-          }
+          className={"flex items-center w-full " + (done ? "line-through" : "")}
         >
-          <div
+          <StatusBullet
             onClick={() => updateTask(idx, !done, title, date, time)}
-            style={{ minWidth: "1.5rem", minHeight: "1.5rem" }}
-            className={
-              "flex justify-center items-center mr-4 border-gray-400 rounded-full cursor-pointer transition-all duration-300 " +
-              (done ? "bg-yellow-400" : "border")
-            }
-          >
-            {done && (
-              <img className="w-3 h-3" src="/icons/check-mark.svg" alt="" />
-            )}
-          </div>
-          <div
+            done={done}
+          />
+          <Title
             onClick={() => {
               setUpdateModalIsOpen(true);
             }}
-            className="flex-1"
-          >
+            isHover={hoverIdx === idx}
+            title={title}
+          />
+          {idx === hoverIdx && (
             <div
-              className={
-                "w-4/5 transition-all " +
-                (hoverIdx === idx
-                  ? ""
-                  : "overflow-x-hidden whitespace-nowrap overflow-ellipsis")
-              }
+              onClick={() => deleteTask(idx)}
+              className="h-full px-5 transition-all duration-300"
             >
-              {title}
+              &#10005;
             </div>
-          </div>
+          )}
         </div>
-        {idx === hoverIdx && (
-          <div
-            onClick={() => deleteTask(idx)}
-            className="h-full px-5 transition-all duration-300"
-          >
-            &#10005;
-          </div>
-        )}
+        <div onClick={() => setUpdateModalIsOpen(true)} className="flex ml-10">
+          {newDate && (
+            <div className="w-max mr-4 px-4 py-1 text-xs text-gray-500 font-medium border rounded-full">
+              {DAYS_SHORT[newDate.day()]}, {newDate.date()}{" "}
+              {monthsShort(newDate.month())}
+            </div>
+          )}
+          {newTime && (
+            <div className="w-max mr-4 px-4 py-1 text-xs text-gray-500 font-medium border rounded-full">
+              {newTime.format("hh:mm a")}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );
