@@ -81,11 +81,12 @@ const TaskTile: React.FC<TaskTileProps> = ({
               <img className="w-3 h-3" src="/icons/check-mark.svg" alt="" />
             )}
           </div>
-          <div className="flex-1">
-            onClick=
-            {() => {
+          <div
+            onClick={() => {
               setUpdateModalIsOpen(true);
             }}
+            className="flex-1"
+          >
             <div
               className={
                 "w-4/5 transition-all " +
