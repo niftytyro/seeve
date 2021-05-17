@@ -1,9 +1,10 @@
 import React from "react";
 import { DatePicker, TimePicker } from "material-ui-pickers";
-import { Moment } from "moment";
+import { Moment, monthsShort } from "moment";
 import Modal from ".";
 import Chip from "../chip";
 import { TextFieldProps } from "@material-ui/core";
+import { DAYS_SHORT } from "../../utils";
 
 interface TaskModalProps {
   date: Moment | null;
@@ -66,7 +67,15 @@ const TaskModal: React.FC<TaskModalProps> = ({
                 onClick={props.onClick}
                 iconSrc={`/icons/Schedule${date ? "_hover" : "_inactive"}.svg`}
                 onCancel={() => setDate(null)}
-                value={date ? date.toDate().toDateString() : null}
+                value={
+                  date
+                    ? `${DAYS_SHORT[date.day()]}, ${date.date()} ${monthsShort(
+                        date.month()
+                      )}
+                      ${date.year()}
+                      `
+                    : null
+                }
               />
             )}
           />

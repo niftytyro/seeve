@@ -81,18 +81,21 @@ const TaskTile: React.FC<TaskTileProps> = ({
               <img className="w-3 h-3" src="/icons/check-mark.svg" alt="" />
             )}
           </div>
-          <div
-            onClick={() => {
+          <div className="flex-1">
+            onClick=
+            {() => {
               setUpdateModalIsOpen(true);
             }}
-            className={
-              "w-4/5 transition-all " +
-              (hoverIdx === idx
-                ? ""
-                : "overflow-x-hidden whitespace-nowrap overflow-ellipsis")
-            }
-          >
-            {title}
+            <div
+              className={
+                "w-4/5 transition-all " +
+                (hoverIdx === idx
+                  ? ""
+                  : "overflow-x-hidden whitespace-nowrap overflow-ellipsis")
+              }
+            >
+              {title}
+            </div>
           </div>
         </div>
         {idx === hoverIdx && (
