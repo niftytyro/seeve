@@ -122,8 +122,8 @@ const Tasks: React.FC = () => {
               .filter((task) => task.done)
               .map((task, idx) => (
                 <TaskTile
-                  date={task.date}
-                  time={task.time}
+                  date={moment(task.date)}
+                  time={moment(task.time)}
                   key={idx}
                   hoverIdx={hoverIdx}
                   done={task.done}
@@ -144,8 +144,8 @@ const Tasks: React.FC = () => {
               .filter((task) => !task.done)
               .map((task, idx) => (
                 <TaskTile
-                  date={task.date}
-                  time={task.time}
+                  date={moment(task.date)}
+                  time={moment(task.time)}
                   key={idx}
                   hoverIdx={hoverIdx}
                   done={task.done}
