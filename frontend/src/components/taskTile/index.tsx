@@ -54,7 +54,7 @@ const TaskTile: React.FC<TaskTileProps> = ({
         setTitle={setNewTitle}
         time={newTime}
         title={newTitle}
-        modalTitle="New Task"
+        modalTitle="Edit Task"
       />
       <div
         onMouseOver={() => setHoverIdx(idx)}
@@ -71,8 +71,9 @@ const TaskTile: React.FC<TaskTileProps> = ({
         >
           <div
             onClick={() => updateTask(idx, !done, title, date, time)}
+            style={{ minWidth: "1.5rem", minHeight: "1.5rem" }}
             className={
-              "flex justify-center items-center w-6 h-6 mr-4 border-gray-400 rounded-full cursor-pointer transition-all duration-300 " +
+              "flex justify-center items-center mr-4 border-gray-400 rounded-full cursor-pointer transition-all duration-300 " +
               (done ? "bg-yellow-400" : "border")
             }
           >
@@ -84,7 +85,6 @@ const TaskTile: React.FC<TaskTileProps> = ({
             onClick={() => {
               setUpdateModalIsOpen(true);
             }}
-            style={{ maxWidth: "30%" }}
           >
             {title}
           </div>

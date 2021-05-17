@@ -3,8 +3,15 @@ import { Moment } from "moment";
 import { useToasts } from "react-toast-notifications";
 import TaskModal from "../components/modal/taskModal";
 import TaskTile from "../components/taskTile";
-import { API_URL, Task } from "../utils";
+import {
+  fetchCreateTask,
+  fetchDeleteTask,
+  fetchGetTasks,
+  fetchUpdateTask,
+  Task,
+} from "../utils";
 import moment from "moment";
+import Spinner from "../components/spinner";
 
 const Tasks: React.FC = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(-1);
@@ -17,7 +24,7 @@ const Tasks: React.FC = () => {
 
   useEffect(() => {
     (async () => {
-      const res = await fetch(`${API_URL}/tasks`, { credentials: "include" });
+      const res = await fetchGetTasks();
       const tasksList = await res.json();
       setTasks(
         tasksList.map((task: Task) => {
@@ -28,28 +35,11 @@ const Tasks: React.FC = () => {
     })();
   }, []);
 
-  if (tasks === null)
-    return (
-      <div className="flex justify-center items-center h-full">
-        <img src="/icons/spinner.svg" alt="" />
-      </div>
-    );
+  if (tasks === null) return <Spinner />;
 
   const addTask: () => Promise<void> = async () => {
     if (newTaskTitle) {
-      const res = await fetch(`${API_URL}/tasks/create`, {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title: newTaskTitle,
-          date: newTaskDate?.toDate(),
-          time: newTaskTime?.toDate(),
-        }),
-      });
-
+      const res = await fetchCreateTask(newTaskTitle, newTaskDate, newTaskTime);
       if (res.status === 201) {
         setTasks([
           ...tasks,
@@ -69,10 +59,7 @@ const Tasks: React.FC = () => {
   };
 
   const deleteTask: (idx: number) => Promise<void> = async (idx) => {
-    const res = await fetch(`${API_URL}/tasks/delete/${idx}`, {
-      method: "POST",
-      credentials: "include",
-    });
+    const res = await fetchDeleteTask(idx);
     if (res.status === 200) {
       const newTasks = tasks.filter((task) => task.id !== idx);
       setTasks(newTasks);
@@ -90,19 +77,7 @@ const Tasks: React.FC = () => {
     time: Moment | null
   ) => Promise<void> = async (idx, done, title, date, time) => {
     let task = tasks.filter((task) => task.id === idx)[0];
-    const res = await fetch(`${API_URL}/tasks/edit/${idx}`, {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        title,
-        done,
-        date: date?.toDate(),
-        time: time?.toDate(),
-      }),
-    });
+    const res = await fetchUpdateTask(idx, title, done, date, time);
     if (res.status === 200) {
       task.done = done;
       task.title = title;
@@ -127,7 +102,7 @@ const Tasks: React.FC = () => {
         date={newTaskDate}
         time={newTaskTime}
         title={newTaskTitle}
-        modalTitle="Edit Task"
+        modalTitle="New Task"
         isOpen={modalIsOpen}
         setDate={setNewTaskDate}
         setTime={setNewTaskTime}
