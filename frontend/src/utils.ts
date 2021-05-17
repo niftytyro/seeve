@@ -15,6 +15,30 @@ export const sidebarSectionsList = [
   "Reminders",
 ];
 
+export const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
+];
+export const DAYS = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 export const API_URL = "http://localhost:8000";
 
 export interface Task {
@@ -55,6 +79,8 @@ export const fetchUpdateTask = (
   date: Moment | null,
   time: Moment | null
 ) => {
+  console.log(typeof date);
+
   return fetch(`${API_URL}/tasks/edit/${idx}`, {
     method: "POST",
     credentials: "include",

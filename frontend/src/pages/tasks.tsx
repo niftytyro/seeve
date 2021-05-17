@@ -12,6 +12,7 @@ import {
 } from "../utils";
 import moment from "moment";
 import Spinner from "../components/spinner";
+import DayHeader from "../components/dayHeader";
 
 const Tasks: React.FC = () => {
   const [hoverIdx, setHoverIdx] = useState<number>(-1);
@@ -108,21 +109,7 @@ const Tasks: React.FC = () => {
         setTime={setNewTaskTime}
         setTitle={setNewTaskTitle}
       />
-      <div className="flex justify-between items-start w-3/4 pt-2 pb-4 m-auto">
-        <div>
-          <div className="text-3xl font-semibold text-gray-800">Today</div>
-          <div className="text-xl font-medium text-gray-500">
-            Saturday, May 15
-          </div>
-        </div>
-        <button
-          onClick={() => setModalIsOpen(true)}
-          className="px-6 py-4 bg-black text-white text-sm rounded-xl focus:outline-none"
-        >
-          <span className="mr-3 font-semibold text-lg">+</span>
-          Add new task
-        </button>
-      </div>
+      <DayHeader openModal={() => setModalIsOpen(true)} />
       <div className="flex flex-col justify-between flex-1 w-full pb-8 overflow-hidden">
         <div className="w-full h-full overflow-y-scroll">
           <div className="w-3/4 m-auto">
